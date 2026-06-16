@@ -36,7 +36,7 @@ A modern social networking platform built with Next.js, TypeScript, Node.js, and
 ## Installation
 
 ```bash
-git clone <repository-url>
+git clone <https://github.com/sakinaowais989/SocialNetwork.git>
 cd socialconnect
 npm install
 npm run dev
