@@ -33,11 +33,14 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'https://socialnetwork-production-f406.up.railway.app',
-        'https://social-network-pink-six.vercel.app/',
-        '*'
+        'https://social-network-pink-six.vercel.app'
     ],
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
+app.options('*', cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
