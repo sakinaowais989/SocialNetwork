@@ -31,13 +31,13 @@ const getBaseUrl = () => {
 // ============ MIDDLEWARE ============
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
+        // Allow requests with no origin
         if (!origin) {
             return callback(null, true);
         }
         
-        // Allow all vercel.app and railway.app domains
-        if (origin.includes('vercel.app') || origin.includes('railway.app')) {
+        // Allow all vercel.app domains (including preview deployments)
+        if (origin.includes('vercel.app')) {
             return callback(null, true);
         }
         
@@ -45,7 +45,8 @@ app.use(cors({
         const allowedOrigins = [
             'http://localhost:3000',
             'https://socialnetwork-production-f406.up.railway.app',
-            'https://social-network-pink-six.vercel.app'
+            'https://social-network-pink-six.vercel.app',
+            'https://social-network-git-main-sakina-owais-projects.vercel.app'  // ✅ NEW URL ADD KAREIN
         ];
         
         if (allowedOrigins.indexOf(origin) !== -1) {
@@ -58,6 +59,8 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
+app.options('*', cors());
 
 // Handle preflight requests
 app.options('*', cors());
