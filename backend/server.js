@@ -33,6 +33,7 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'https://socialnetwork-production-f406.up.railway.app',
+        'https://social-network-pink-six.vercel.app/',
         '*'
     ],
     credentials: true
