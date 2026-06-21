@@ -30,19 +30,37 @@ const getBaseUrl = () => {
 
 // ============ MIDDLEWARE ============
 app.use(cors({
-    origin: [
-        'http://localhost:3000',
-        'https://socialnetwork-production-f406.up.railway.app',
-        'https://social-network-pink-six.vercel.app'
-    ],
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) {
+            return callback(null, true);
+        }
+        
+        // Allow all vercel.app and railway.app domains
+        if (origin.includes('vercel.app') || origin.includes('railway.app')) {
+            return callback(null, true);
+        }
+        
+        // Allow specific origins
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'https://socialnetwork-production-f406.up.railway.app',
+            'https://social-network-pink-six.vercel.app'
+        ];
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
+// Handle preflight requests
 app.options('*', cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // ============ STATIC FILES ============
 const uploadsDir = path.join(__dirname, 'uploads');
